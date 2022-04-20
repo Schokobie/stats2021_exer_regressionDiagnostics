@@ -32,7 +32,7 @@ The regression diagnostics available in Jamovi are still limited. It would be a 
 
 ```{r}
 # keep a list of the packages used in this script
-packages <- c("tidyverse","rio","jmv","boot","car","QuantPsyc","lmtest","faraway","broom")
+packages <- c("tidyverse","rio","jmv","boot","car","QuantPsyc","lmtest","faraway","broom", "Rtools")
 ```
 
 This next code block has eval=FALSE because you don't want to run it when knitting the file. Installing packages when knitting an R notebook can be problematic.
@@ -48,7 +48,7 @@ for (i in packages){
 }
 ```
 
-```{r}
+```{r eval=FALSE}
 # load each package into memory so it can be used in the script
 for (i in packages){
   library(i,character.only=TRUE)
@@ -119,7 +119,7 @@ summary(standardized)
 
 Another option for getting standardized residuals is in the QuantPsyc package.
 
-```{r}
+```{r eval=FALSE}
 QuantPsyc::lm.beta(model.3)
 ```
 
@@ -241,7 +241,7 @@ influence.measures(model.3)
 
 Some more plots looking for outliers.
 
-```{r}
+```{r eval=FALSE}
 car::outlierTest(model.3)
 qqPlot(model.3, main="QQ Plot")
 leveragePlots(model.3)
@@ -253,7 +253,7 @@ leveragePlots(model.3)
 This site is the worst to navigate, but they have some plots and tests the others don't.
 https://stats.idre.ucla.edu/wp-content/uploads/2019/02/R_reg_part2.html#(4)
 
-```{r}
+```{r eval=FALSE}
 # https://stats.idre.ucla.edu/wp-content/uploads/2019/02/R_reg_part2.html#(4)
 plot(model.3, which = 4, cook.levels = cutoff)
 influencePlot(model.3, main="Influence Plot", sub="Circle size proportional to Cook's Distance")
@@ -271,7 +271,7 @@ print(index)
 
 Nice plot to identify high leverage values.
 
-```{r}
+```{r eval=FALSE}
 #a vector containing the diagonal of the 'hat' matrix
 h <- influence(model.3)$hat
 #half normal plot of leverage from package faraway
@@ -283,7 +283,7 @@ halfnorm(influence(model.3)$hat, ylab = "leverage")
 
 May be helpful in identifying influential cases.
 
-```{r}
+``{r eval=FALSE}
 # https://web.stanford.edu/class/stats191/notebooks/Diagnostics_for_multiple_regression.html
 # If the partial regression relationship is linear, this plot should look linear.
 avPlots(model.3, 'Adverts')
@@ -295,7 +295,7 @@ avPlots(model.3, 'Image')
 
 Similar to the Added Variable plot, but may be more helpful in identifying non-linear relationships.
 
-```{r}
+```{r eval=FALSE}
 # https://web.stanford.edu/class/stats191/notebooks/Diagnostics_for_multiple_regression.html
 # The green line is a non-parametric smooth of the scatter plot that may suggest
 # relationship other than linear.
@@ -329,7 +329,7 @@ car::residualPlots(model.3)
 
 #### Independent errors
 
-```{r}
+```{r eval=FALSE}
 # value less than 1 or greater than 3 problematic
 # close to 2 is best
 durbinWatsonTest(model.3)
@@ -346,7 +346,7 @@ plot(model.3$resid ~ dataset$id)
 
 #### Homoscedasticity
 
-```{r}
+```{r eval=FALSE}
 # no funneling
 # first plot - plot fitted values against residuals
 plot(model.3)
@@ -384,7 +384,7 @@ All variables should be quantitative. Categorical variables should only have 2 c
 
 You can check pair-wise correlations between predictors before fitting the model. Correlations above .8 could be problematic.
 
-```{r}
+```{r eval=FALSE}
 # largest VIF greater than 10 problematic
 # Average VIF greater than 1 regression may be biased
 # tolerance less than .1 a serious problem
